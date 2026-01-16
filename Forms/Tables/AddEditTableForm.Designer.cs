@@ -126,7 +126,11 @@ namespace CafeManagementSystem.Forms.Tables
             this.cboStatus.DropDownStyle = ComboBoxStyle.DropDownList;
             this.cboStatus.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.cboStatus.FormattingEnabled = true;
-            this.cboStatus.Items.AddRange(new object[] { "Available", "Occupied", "Reserved" });
+            this.cboStatus.Items.AddRange(new object[] { 
+                CafeManagementSystem.Models.TableStatus.Available, 
+                CafeManagementSystem.Models.TableStatus.Occupied, 
+                CafeManagementSystem.Models.TableStatus.Reserved 
+            });
             this.cboStatus.Location = new System.Drawing.Point(30, 325);
             this.cboStatus.Name = "cboStatus";
             this.cboStatus.Size = new System.Drawing.Size(390, 25);

@@ -51,11 +51,11 @@ public partial class TableManagementForm : Form
 
             // Color code based on status
             var row = dataGridViewTables.Rows[rowIndex];
-            if (table.Status == "Reserved")
+            if (table.Status == TableStatus.Reserved)
             {
                 row.DefaultCellStyle.BackColor = System.Drawing.Color.LightYellow;
             }
-            else if (table.Status == "Occupied")
+            else if (table.Status == TableStatus.Occupied)
             {
                 row.DefaultCellStyle.BackColor = System.Drawing.Color.LightCoral;
             }
