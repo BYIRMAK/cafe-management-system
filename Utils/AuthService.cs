@@ -21,6 +21,8 @@ public class AuthService
         using var connection = DatabaseManager.Instance.GetConnection();
         connection.Open();
 
+        // NOTE: In production, password should be hashed and compared with stored hash
+        // TODO: Implement password hashing (bcrypt, PBKDF2, or Argon2) before production
         string query = "SELECT * FROM Users WHERE Username = @Username AND Password = @Password AND IsActive = 1";
         using var command = new SQLiteCommand(query, connection);
         command.Parameters.AddWithValue("@Username", username);
@@ -29,11 +31,12 @@ public class AuthService
         using var reader = command.ExecuteReader();
         if (reader.Read())
         {
+            // Don't store the password in memory
             CurrentUser = new User
             {
                 Id = reader.GetInt32(0),
                 Username = reader.GetString(1),
-                Password = reader.GetString(2),
+                Password = string.Empty, // Don't keep password in memory
                 FullName = reader.GetString(3),
                 Role = reader.GetString(4),
                 IsActive = reader.GetInt32(5) == 1,

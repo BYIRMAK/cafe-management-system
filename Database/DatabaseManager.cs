@@ -5,7 +5,7 @@ namespace CafeManagementSystem.Database;
 
 public class DatabaseManager
 {
-    private static DatabaseManager? _instance;
+    private static readonly Lazy<DatabaseManager> _instance = new Lazy<DatabaseManager>(() => new DatabaseManager());
     private readonly string _connectionString;
     private const string DbFileName = "CafeManagement.db";
 
@@ -16,17 +16,7 @@ public class DatabaseManager
         InitializeDatabase();
     }
 
-    public static DatabaseManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = new DatabaseManager();
-            }
-            return _instance;
-        }
-    }
+    public static DatabaseManager Instance => _instance.Value;
 
     public SQLiteConnection GetConnection()
     {
@@ -144,6 +134,9 @@ public class DatabaseManager
 
         if (userCount == 0)
         {
+            // NOTE: In production, passwords should be hashed using bcrypt, PBKDF2, or Argon2
+            // For initial development, using plain text with a TODO marker
+            // TODO: Implement password hashing before production deployment
             string insertUserSql = @"
                 INSERT INTO Users (Username, Password, FullName, Role, CreatedAt)
                 VALUES ('admin', 'admin123', 'Administrator', 'Admin', @CreatedAt)
